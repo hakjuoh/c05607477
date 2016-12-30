@@ -2,6 +2,7 @@ package edu.project.c05607477.api.controller;
 
 import edu.project.c05607477.api.model.ErrorResponse;
 import edu.project.c05607477.exceptions.EmptyAccountException;
+import edu.project.c05607477.exceptions.InvalidTransferRequestException;
 import edu.project.c05607477.exceptions.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class ApiErrorController implements ErrorController {
@@ -26,7 +26,6 @@ public class ApiErrorController implements ErrorController {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException e) {
         String errorCode = "404";
@@ -36,7 +35,6 @@ public class ApiErrorController implements ErrorController {
     }
 
     @ExceptionHandler(EmptyAccountException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleEmptyAccountException(EmptyAccountException e) {
         String errorCode = "404";
@@ -45,8 +43,17 @@ public class ApiErrorController implements ErrorController {
         return new ResponseEntity(new ErrorResponse(errorCode, errorMsg), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InvalidTransferRequestException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleInvalidTransferRequestException(InvalidTransferRequestException e) {
+        String errorCode = "400";
+        String errorMsg = e.getMessage();
+
+        return new ResponseEntity(new ErrorResponse(errorCode, errorMsg), HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(Throwable.class)
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleThrowable(Throwable e) {
         logger.error("Unexpected error occurs", e);
