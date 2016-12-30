@@ -1,0 +1,6 @@
+*.iml
+*.swp
+docker*
+.idea/*
+**/*.class
+target/*
