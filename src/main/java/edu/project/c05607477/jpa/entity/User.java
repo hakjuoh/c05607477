@@ -5,34 +5,27 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "USER_ID")
+    @Column
     private Long userId;
 
-    @Column(name = "ADDRESS")
+    @Column
     private String address;
 
-    @Column(name = "EMAIL")
+    @Column
     private String email;
 
-    @Column(name = "NAME")
+    @Column
     private String name;
 
-    @Column(name = "PIN_CODE")
+    @Column
     private Integer pinCode;
 
-    @JoinTable(name = "User_ACCOUNTS",
-            joinColumns = {
-                    @JoinColumn(name = "User_USER_ID", referencedColumnName = "USER_ID")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "account_ACCOUNT_ID", referencedColumnName = "ACCOUNT_ID")
-            })
-    @ManyToMany
+    @OneToMany(mappedBy = "user")
     private Collection<Account> accounts;
 
     public Long getUserId() {

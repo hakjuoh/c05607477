@@ -3,13 +3,16 @@ package edu.project.c05607477.service;
 import edu.project.c05607477.exceptions.EmptyAccountException;
 import edu.project.c05607477.exceptions.UserNotFoundException;
 import edu.project.c05607477.jpa.entity.Account;
+import edu.project.c05607477.jpa.entity.AccountType;
 import edu.project.c05607477.jpa.entity.User;
+import edu.project.c05607477.jpa.repository.AccountRepository;
 import edu.project.c05607477.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -41,4 +44,10 @@ public class UserService {
 
         return accounts;
     }
+
+    public Long createUser(User user) {
+        userRepository.saveAndFlush(user);
+        return user.getUserId();
+    }
+
 }

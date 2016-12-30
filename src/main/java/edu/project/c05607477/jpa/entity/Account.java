@@ -5,31 +5,35 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 @Entity
-@Table(name = "ACCOUNTS")
+@Table(name = "account")
 public class Account implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "ACCOUNT_ID")
+    @Column
     private Long accountId;
 
-    @Column(name = "ACCOUNT_NO")
+    @Column
     private String accountNo;
 
-    @Column(name = "ACCOUNT_TYPE")
-    private String accountType;
+    @Column
+    private AccountType accountType;
 
-    @Column(name = "BALANCE")
-    private String balance;
+    @Column
+    private BigInteger balance;
 
-    @Column(name = "CREDIT_CARD")
+    @Column
     private String creditCard;
 
-    @Column(name = "SORT_CODE")
+    @Column
     private Integer sortCode;
 
-    @Column(name = "TRANSACTION_LIST")
+    @Column
     private String transactionList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getAccountId() {
         return accountId;
@@ -47,19 +51,19 @@ public class Account implements Serializable {
         this.accountNo = accountNo;
     }
 
-    public String getAccountType() {
+    public AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 
-    public String getBalance() {
+    public BigInteger getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(BigInteger balance) {
         this.balance = balance;
     }
 
@@ -85,5 +89,13 @@ public class Account implements Serializable {
 
     public void setTransactionList(String transactionList) {
         this.transactionList = transactionList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -54,6 +54,8 @@ All interfaces have written through RESTful structure and access over HTTP(S). A
             accountNo - (string)
             accountType - (string)
             balance - (positive number)
+            
+    Response Example
     ```
     200 OK
     {
@@ -75,3 +77,46 @@ All interfaces have written through RESTful structure and access over HTTP(S). A
         "errorMessage": "Requested user have no account"
     }
     ```
+
+- `POST` /users
+
+    Parameters
+    
+        address - (string)
+        email - (string)
+        name - (string)
+        pinCode - (positive number)
+
+    Response
+    
+        userId - (positive number)
+        
+    Response Example
+    ```
+    201 CREATED
+    {
+        "userId": 1
+    }
+    ```
+    
+## Account
+
+- `POST` /accounts
+
+    Parameters
+    
+        userId - (positive number)
+        accountType - (Account Type)
+
+    Response
+    
+        accountId - (positive number)
+        
+    Response Example
+    ```
+    201 CREATED
+    {
+        "accountId": 1
+    }
+    ```
+

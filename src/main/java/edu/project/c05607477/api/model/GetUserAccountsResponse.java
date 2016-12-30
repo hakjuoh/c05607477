@@ -1,5 +1,8 @@
 package edu.project.c05607477.api.model;
 
+import edu.project.c05607477.jpa.entity.AccountType;
+
+import java.math.BigInteger;
 import java.util.Collection;
 
 public class GetUserAccountsResponse {
@@ -10,9 +13,9 @@ public class GetUserAccountsResponse {
 
         private String accountNo;
 
-        private String accountType;
+        private AccountType accountType;
 
-        private String balance;
+        private BigInteger balance;
 
         public Long getAccountId() {
             return accountId;
@@ -30,19 +33,19 @@ public class GetUserAccountsResponse {
             this.accountNo = accountNo;
         }
 
-        public String getAccountType() {
+        public AccountType getAccountType() {
             return accountType;
         }
 
-        public void setAccountType(String accountType) {
+        public void setAccountType(AccountType accountType) {
             this.accountType = accountType;
         }
 
-        public String getBalance() {
+        public BigInteger getBalance() {
             return balance;
         }
 
-        public void setBalance(String balance) {
+        public void setBalance(BigInteger balance) {
             this.balance = balance;
         }
     }
