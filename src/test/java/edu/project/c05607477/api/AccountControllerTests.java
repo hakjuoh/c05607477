@@ -3,6 +3,7 @@ package edu.project.c05607477.api;
 import edu.project.c05607477.Application;
 import edu.project.c05607477.api.model.CreateAccountRequest;
 import edu.project.c05607477.api.model.CreateAccountResponse;
+import edu.project.c05607477.api.model.ErrorResponse;
 import edu.project.c05607477.api.model.GetUserAccountsResponse;
 import edu.project.c05607477.jpa.entity.AccountType;
 import edu.project.c05607477.jpa.entity.User;
@@ -34,6 +35,24 @@ public class AccountControllerTests {
     private TestRestTemplate restTemplate;
 
     private Random random = new Random();
+
+    @Test
+    public void getAccountInformationWithInvalidAccountIdTest() {
+        Long accountId = 0L;
+        ResponseEntity<ErrorResponse> responseEntity = getAccountInformation(accountId, ErrorResponse.class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+        ErrorResponse errorResponse = responseEntity.getBody();
+        assertThat(errorResponse).isNotNull();
+
+        assertThat(errorResponse.getErrorCode()).isEqualTo("404");
+        assertThat(errorResponse.getErrorMessage()).isEqualTo("Requested account doesn't exist");
+    }
+
+    private <T> ResponseEntity<T> getAccountInformation(Long accountId, Class<T> responseType) {
+        return this.restTemplate.getForEntity("/api/v1/accounts/{accountId}", responseType, accountId);
+    }
 
     @Test
     public void createUserAccountTest() {
@@ -72,10 +91,12 @@ public class AccountControllerTests {
 
     private User createTestUser() {
         User testUser = new User();
-        testUser.setAddress("test address");
-        testUser.setEmail("test email");
-        testUser.setName("test name");
-        testUser.setPinCode(Math.abs(random.nextInt(10000)));
+
+        int pinCode = Math.abs(random.nextInt(10000));
+        testUser.setAddress("test address " + pinCode);
+        testUser.setEmail("test email " + pinCode);
+        testUser.setName("test name " + pinCode);
+        testUser.setPinCode(pinCode);
 
         userService.createUser(testUser);
         return testUser;

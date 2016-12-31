@@ -1,6 +1,7 @@
 package edu.project.c05607477.service;
 
 import edu.project.c05607477.component.AccountNumberGenerator;
+import edu.project.c05607477.exceptions.AccountNotFoundException;
 import edu.project.c05607477.jpa.entity.Account;
 import edu.project.c05607477.jpa.entity.AccountType;
 import edu.project.c05607477.jpa.entity.User;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -33,5 +33,18 @@ public class AccountService {
         accountRepository.saveAndFlush(account);
 
         return account.getAccountId();
+    }
+
+    public Account getAccount(Long accountId) {
+        if (accountId == null || accountId <= 0L) {
+            throw new AccountNotFoundException();
+        }
+
+        Account account = accountRepository.findOne(accountId);
+        if (account == null) {
+            throw new AccountNotFoundException();
+        }
+
+        return account;
     }
 }

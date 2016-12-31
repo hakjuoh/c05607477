@@ -1,8 +1,9 @@
 package edu.project.c05607477.api.controller;
 
 import edu.project.c05607477.api.model.ErrorResponse;
+import edu.project.c05607477.exceptions.AccountNotFoundException;
 import edu.project.c05607477.exceptions.EmptyAccountException;
-import edu.project.c05607477.exceptions.InvalidTransferRequestException;
+import edu.project.c05607477.exceptions.InvalidTransactionRequestException;
 import edu.project.c05607477.exceptions.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +44,18 @@ public class ApiErrorController implements ErrorController {
         return new ResponseEntity(new ErrorResponse(errorCode, errorMsg), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InvalidTransferRequestException.class)
+    @ExceptionHandler(AccountNotFoundException.class)
     @ResponseBody
-    public ResponseEntity<ErrorResponse> handleInvalidTransferRequestException(InvalidTransferRequestException e) {
+    public ResponseEntity<ErrorResponse> handleAccountNotFoundException(AccountNotFoundException e) {
+        String errorCode = "404";
+        String errorMsg = "Requested account doesn't exist";
+
+        return new ResponseEntity(new ErrorResponse(errorCode, errorMsg), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidTransactionRequestException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleInvalidTransferRequestException(InvalidTransactionRequestException e) {
         String errorCode = "400";
         String errorMsg = e.getMessage();
 

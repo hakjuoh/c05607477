@@ -16,17 +16,28 @@ public class Transaction implements Serializable {
     @Column
     private String txNo;
 
-    @JoinColumn(name = "from_account_id")
+    @JoinColumn(name = "source_account_id")
     @OneToOne
-    private Account fromAccount;
+    private Account sourceAccount;
 
-    @JoinColumn(name = "to_account_id")
+    @JoinColumn(name = "target_account_id")
     @OneToOne
-    private Account toAccount;
+    private Account targetAccount;
 
     @Column
     private BigInteger amount;
 
+    @Column
+    private BigInteger beforeBalance;
+
+    @Column
+    private BigInteger afterBalance;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private TxType txType;
+
+    @Enumerated(EnumType.STRING)
     @Column
     private TxStatus txStatus;
 
@@ -52,20 +63,20 @@ public class Transaction implements Serializable {
         this.txNo = txNo;
     }
 
-    public Account getFromAccount() {
-        return fromAccount;
+    public Account getSourceAccount() {
+        return sourceAccount;
     }
 
-    public void setFromAccount(Account fromAccount) {
-        this.fromAccount = fromAccount;
+    public void setSourceAccount(Account fromAccount) {
+        this.sourceAccount = fromAccount;
     }
 
-    public Account getToAccount() {
-        return toAccount;
+    public Account getTargetAccount() {
+        return targetAccount;
     }
 
-    public void setToAccount(Account toAccount) {
-        this.toAccount = toAccount;
+    public void setTargetAccount(Account toAccount) {
+        this.targetAccount = toAccount;
     }
 
     public BigInteger getAmount() {
@@ -74,6 +85,30 @@ public class Transaction implements Serializable {
 
     public void setAmount(BigInteger amount) {
         this.amount = amount;
+    }
+
+    public BigInteger getBeforeBalance() {
+        return beforeBalance;
+    }
+
+    public void setBeforeBalance(BigInteger beforeBalance) {
+        this.beforeBalance = beforeBalance;
+    }
+
+    public BigInteger getAfterBalance() {
+        return afterBalance;
+    }
+
+    public void setAfterBalance(BigInteger afterBalance) {
+        this.afterBalance = afterBalance;
+    }
+
+    public TxType getTxType() {
+        return txType;
+    }
+
+    public void setTxType(TxType txType) {
+        this.txType = txType;
     }
 
     public TxStatus getTxStatus() {

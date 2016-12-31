@@ -16,6 +16,7 @@ public class Account implements Serializable {
     @Column
     private String accountNo;
 
+    @Enumerated(EnumType.STRING)
     @Column
     private AccountType accountType;
 

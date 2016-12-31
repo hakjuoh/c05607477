@@ -62,9 +62,9 @@ All interfaces have written through RESTful structure and access over HTTP(S). A
         "userAccounts": [
             {
                 "accountId": 1,
-                "accountNo": null,
-                "accountType": "",
-                "balance": null
+                "accountNo": "72538ef0-04e4-4f90-900c-ad0de1a26c09",
+                "accountType": "Checking",
+                "balance": 0
             }
         ]
     }
@@ -100,6 +100,28 @@ All interfaces have written through RESTful structure and access over HTTP(S). A
     ```
     
 ## Account
+- `GET` /accounts/[*accountId*]
+
+    Parameters
+    
+        accountId - (positive number)
+
+    Response
+    
+        accountNo - (string)
+        accountType - (string)
+        balance - (positive number)
+        
+    Response Example
+    ```
+    200 OK
+    {
+        "accountNo": "72538ef0-04e4-4f90-900c-ad0de1a26c09",
+        "accountType": "Checking",
+        "balance": 0
+    }
+    ```
+       
 
 - `POST` /accounts
 
@@ -120,3 +142,25 @@ All interfaces have written through RESTful structure and access over HTTP(S). A
     }
     ```
 
+## Transaction
+- `POST` /transactions/transferTo
+
+    Parameters
+    
+        senderAccountId - (positive number)
+        recipientAccountId - (positive number)
+        amount - (positive number)
+        
+    Response
+    
+        txNo - (string)
+        txStatus - (TxStatus)
+        
+    Response Example
+    ```
+    200 OK
+    {
+        "txNo": "0075865a-0eda-46ed-bf79-a49d8c5b350c",
+        "txStatus": "Success"
+    }
+    ```
